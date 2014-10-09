@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+
+		<title>ws client</title>
+
+		<script type="text/javascript" src="wsClient.js"></script>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			var ws;
+			window.wsClient('ws://127.0.0.1:12345/gamepad', {
+				onError: function(err) {
+					console.error(err);
+				},
+				onReady: function(api) {
+					console.warn('ready!');
+					ws = api;
+				},
+				onMessage: function(o) {
+					console.log(o);
+				}
+			});
+		</script>
+	</body>
+</html>

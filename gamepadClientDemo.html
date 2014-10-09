@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+
+		<title>gamepad client</title>
+
+		<script type="text/javascript" src="wsClient.js"></script>
+		<script type="text/javascript" src="gamepadClient.js"></script>
+
+		<style type="text/css">
+			body {
+				font-family: sans-serif;
+			}
+			label {
+				font-weight: bold;
+				display: inline-block;
+				width: 4em;
+			}
+			span {
+				display: inline-block;
+				text-align: right;
+				width: 4em;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			var I = function(id) {
+				return document.getElementById(id);
+			};
+
+			var gpc = window.gamepadClient({
+				ws:       'ws://127.0.0.1:12345/gamepad', 
+				nrAxis:     4,
+				nrButtons: 12,
+				nrHats:     1,
+				onEvent: function(o) {
+					I(o.kind + o.which).innerHTML = ( (o.kind === 'axis') ? o.value.toFixed(2) : o.value);
+				}
+			});
+
+			var gp = gpc.getState();
+
+			// initialize DOM elements
+			(function() {
+				var ctn, i, I;
+				for (var ctnName in gp) {
+					ctn = gp[ctnName];
+					I = ctn.length;
+					for (i = 0; i < I; ++i) {
+						document.body.innerHTML += ['<div><label>', ctnName, '#', i, '</label><span id="', ctnName, i, '"></span></div>'].join('');
+					}
+				}
+			})();
+		</script>
+	</body>
+</html>

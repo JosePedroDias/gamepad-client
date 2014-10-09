@@ -40,9 +40,9 @@ window.gamepadClient = function(cfg) {
 				cfg.onError(err);
 			}
 		},
-		onReady: function(api) {
+		onReady: function(ws_) {
 			//console.warn('ready!');
-			ws = api;
+			ws = ws_;
 			if (cfg.onReady) {
 				cfg.onReady(api);
 			}
